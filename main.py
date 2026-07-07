@@ -56,10 +56,22 @@ def load_dotenv_config():
 # 4. OS ENV CONFIG
 # ----------------------------
 def load_os_env_config():
-    return {
-        "log_level": os.getenv("APP_LOG_LEVEL")
+    config = {}
+
+    mapping = {
+        "APP_PORT": "port",
+        "APP_WORKERS": "workers",
+        "APP_DEBUG": "debug",
+        "APP_LOG_LEVEL": "log_level",
+        "APP_API_KEY": "api_key"
     }
 
+    for env_key, config_key in mapping.items():
+        value = os.getenv(env_key)
+        if value is not None:
+            config[config_key] = value
+
+    return config
 # ----------------------------
 # TYPE CONVERSION
 # ----------------------------
